@@ -17,12 +17,14 @@ clearLogs = file_actions.delete_logs # set clearLogs to delete_logs function    
 
 class innit(): # innit class
     def __init__(): # innit function
-        backup() # create zip backup
         clearLogs() # delete logs
+        innit.main()
         pass # pass
     
     
     def main(): # main function
+        if os.path.exists("innit.py"): # if innit.py exists
+            print("Innit.py already exists. Exiting...", style="bold red") # print innit.py already exists
         pass # pass
         
 if __name__ == '__main__': # check if file is being run directly

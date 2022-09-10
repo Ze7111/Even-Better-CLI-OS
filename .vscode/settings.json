@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Test",
+            "database": "${workspaceFolder:Even-Better-CLI-OS}/frontend/data/credentials.db",
+            "group": "no idea"
+        }
+    ]
+}
