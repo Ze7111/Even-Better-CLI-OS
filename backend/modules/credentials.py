@@ -11,6 +11,7 @@
 
 from cryptography.fernet import Fernet # import cryptography
 import os # import os
+from time import sleep # import sleep
 
 usernames, passwords, username_index, password_index = [], [], [], [] # initialize lists for usernames, passwords, and indexes
 
@@ -65,6 +66,11 @@ class rCredentials: # create class
                 usernames.append(username) # append username to list
                 index = int(i.split("user")[1].split("=")[0].strip()) # get index of username by splitting line and stripping
                 username_index.append(index) # append index to list
+        # delete duplicates from lists
+        for i in usernames: # loop through usernames
+            usernames = list(dict.fromkeys(usernames)) # delete duplicates
+        for i in username_index: # loop through username indexes
+            username_index = list(dict.fromkeys(username_index)) # delete duplicates
     
     def read_passwords(): # reads passwords
         global passwords, password_index # make global
@@ -147,6 +153,7 @@ class dCredentials: # create class
 
 class Credentials: # create class
     def __init__(self) -> None: # init function
+        global usernames, username_index, passwords, password_index # make global
         if os.path.exists("frontend/data/credentials.key"): # if key exists
             Encryptor.decrypt_file("frontend/data/credentials.db") # decrypt file
         else: # if key does not exist
@@ -155,7 +162,7 @@ class Credentials: # create class
         rCredentials.read_passwords() # read passwords
         Encryptor.encrypt_file("frontend/data/credentials.db") # encrypt file
         
-    def write(self, user, password) -> bool: # write function
+    def add(self, user, password) -> bool: # write function
         if os.path.exists("frontend/data/credentials.key"): # if key exists
             Encryptor.decrypt_file("frontend/data/credentials.db") # decrypt file
         check = wCredentials.write_usernames(user) # write usernames
@@ -178,10 +185,10 @@ class Credentials: # create class
         Encryptor.decrypt_file("frontend/data/credentials.db") # decrypt file
         return  True # return true
     
-    def delete(self, username) -> bool: # delete function 
+    def delete(self, username, password) -> bool: # delete function 
         if os.path.exists("frontend/data/credentials.key"): # if key exists
             Encryptor.decrypt_file("frontend/data/credentials.db") # decrypt file
-        check = dCredentials.delete_user(username) # delete user
+        check = dCredentials.delete_user(username, password) # delete user
         if check is True: # if user is deleted
             Encryptor.encrypt_file("frontend/data/credentials.db") # encrypt file
             return True # return true
@@ -189,12 +196,23 @@ class Credentials: # create class
             Encryptor.encrypt_file("frontend/data/credentials.db") # encrypt file
             return False # return false
         
-if __name__ == "__main__": # if file is run directly
+    def list_users(self):
+        global usernames, username_index
+        return usernames, username_index
+
+if __name__ == "__main__":
+    import sys
+    if sys.argv[0] == "-e":
+        Credentials.manual_encrypt() # encrypt file
+    elif sys.argv[0] == "-d":
+        Credentials.manual_decrypt() # decrypt file
+        
+"""if __name__ == "__main__": # if file is run directly
     cred = Credentials() # create credentials object
     print(usernames) # print usernames
     print(passwords) # print passwords
-    print(cred.write("testuser", "user")) # write user
+    print(cred.add("testuser", "user")) # write user
     print("The next function will not work until the program is restarted") # print message
     print(cred.check("testuser", "user")) # check user
     print("The next function will not work until the program is restarted") # print message
-    print(cred.delete("testuser")) # delete user
+    print(cred.delete("testuser")) # delete user"""

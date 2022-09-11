@@ -7,6 +7,7 @@
 
 # ====================================================================================== Default imports =======================================================================================================
 import sys, os, time, logging, shutil; from rich import console; print = console.Console().print; from backend.core.basic_handler import file_actions; from backend.modules.admin import main as admin #       |
+from frontend.client.commandline import login #                                                                                                                                                                |
 # ==============================================================================================================================================================================================================
 
 # ================================ Global Variables ================================
@@ -23,8 +24,7 @@ class innit(): # innit class
     
     
     def main(): # main function
-        if os.path.exists("innit.py"): # if innit.py exists
-            print("Innit.py already exists. Exiting...", style="bold red") # print innit.py already exists
+        login()
         pass # pass
         
 if __name__ == '__main__': # check if file is being run directly

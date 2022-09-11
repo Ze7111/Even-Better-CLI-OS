@@ -1,0 +1,5 @@
+11-09-22  19:08:53 - INFO - count_log_files function is starting in file /mnt/z/GitHub/Repos/Even-Better-CLI-OS/backend/core/basic_handler.py
+11-09-22  19:08:53 - INFO - count_log_files function is finsihed in file /mnt/z/GitHub/Repos/Even-Better-CLI-OS/backend/core/basic_handler.py
+11-09-22  19:08:53 - INFO - Number of log files in ./logs is 6 before deletion
+11-09-22  19:08:53 - INFO - Removed log file logs/11-09-2022 19-02-55.log in ./logs
+11-09-22  19:08:53 - INFO - Number of log files in ./logs is 5 after deletion
